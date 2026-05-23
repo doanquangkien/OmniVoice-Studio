@@ -46,12 +46,12 @@ def _ensure_vcredist_windows():
     import ctypes
     try:
         ctypes.WinDLL("vcruntime140.dll")
-        print("✓ VC++ Redistributable: already installed")
+        print("[OK] VC++ Redistributable: already installed")
         return
     except OSError:
         pass
 
-    print("⚙ VC++ Redistributable not found — installing (required for PyTorch)...")
+    print("[WAIT] VC++ Redistributable not found — installing (required for PyTorch)...")
 
     import tempfile
     import urllib.request
@@ -75,16 +75,16 @@ def _ensure_vcredist_windows():
         # Verify it worked
         try:
             ctypes.WinDLL("vcruntime140.dll")
-            print("✓ VC++ Redistributable: installed successfully")
+            print("[OK] VC++ Redistributable: installed successfully")
         except OSError:
             # Exit code 3010 = success but reboot required
             if result.returncode == 3010:
-                print("✓ VC++ Redistributable: installed (reboot recommended)")
+                print("[OK] VC++ Redistributable: installed (reboot recommended)")
             else:
-                print(f"⚠ VC++ Redistributable: install may have failed (exit code {result.returncode})")
+                print(f"[WARN] VC++ Redistributable: install may have failed (exit code {result.returncode})")
                 print("  Manual install: https://aka.ms/vs/17/release/vc_redist.x64.exe")
     except Exception as e:
-        print(f"⚠ VC++ Redistributable: auto-install failed: {e}")
+        print(f"[WARN] VC++ Redistributable: auto-install failed: {e}")
         print("  Manual install: https://aka.ms/vs/17/release/vc_redist.x64.exe")
     finally:
         # Clean up installer
@@ -148,7 +148,7 @@ def main():
     if os.path.isdir(lib_dir):
         n = _count_cudnn8_libs(lib_dir)
         if n >= 5:
-            print(f"✓ cuDNN 8 compat: {n} libraries ready")
+            print(f"[OK] cuDNN 8 compat: {n} libraries ready")
             return
 
     # Check if CUDA is available before installing GPU-only libs
@@ -158,12 +158,12 @@ def main():
             capture_output=True, text=True, timeout=30,
         )
         if result.stdout.strip() != "True":
-            print("✓ No CUDA — cuDNN 8 compat not needed")
+            print("[OK] No CUDA — cuDNN 8 compat not needed")
             return
     except Exception:
         pass  # Can't detect CUDA — install anyway, it's harmless on CPU
 
-    print("⚙ Installing cuDNN 8 compatibility libraries for CTranslate2...")
+    print("[WAIT] Installing cuDNN 8 compatibility libraries for CTranslate2...")
     try:
         subprocess.run(
             [
@@ -177,12 +177,12 @@ def main():
             timeout=180,
         )
         n = _count_cudnn8_libs(lib_dir)
-        print(f"✓ cuDNN 8 installed: {n} libraries")
+        print(f"[OK] cuDNN 8 installed: {n} libraries")
     except subprocess.CalledProcessError as e:
-        print(f"⚠ cuDNN 8 install failed (transcription may not work on CUDA):")
+        print(f"[WARN] cuDNN 8 install failed (transcription may not work on CUDA):")
         print(f"  {(e.stderr or '')[:300]}")
     except Exception as e:
-        print(f"⚠ cuDNN 8 install skipped: {e}")
+        print(f"[WARN] cuDNN 8 install skipped: {e}")
 
 
 if __name__ == "__main__":

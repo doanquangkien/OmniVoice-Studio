@@ -1,0 +1,21 @@
+# LUẬT TỐI CAO (SUPREME DIRECTIVE)
+
+Đây là dự án được quản lý bởi hệ thống kiến trúc AGENTS. Bạn là một Agent đang phục vụ dự án này.
+
+## 1. KHỞI TẠO NHẬN THỨC BẮT BUỘC
+Trước khi trả lời hoặc thực hiện bất kỳ lệnh nào của User, BẠN BẮT BUỘC PHẢI đọc file `AGENTS/SKILL.md` bằng công cụ đọc file.
+Tuyệt đối nghiêm cấm tự ý viết code, tạo file hay thay đổi kiến trúc khi chưa tra cứu Bảng định tuyến trong file đó.
+
+## 2. TỰ ĐỘNG ĐỀ XUẤT (PROACTIVE PROPOSAL) - THƯ KÝ NHẮC VIỆC
+Cuối mỗi ca làm việc, hoặc sau khi bạn và User vừa giải quyết xong một bug khó, hoặc vừa áp dụng một công nghệ/thiết kế mới, bạn **BẮT BUỘC** phải chủ động hỏi User:
+> *"Ông chủ, tôi thấy bug này khá dị / kiến trúc này rất hay. Tôi có nên đóng gói nó vào thư mục AGENTS/KNOWLEDGE để các Agent sau này không mắc lại lỗi này không?"*
+
+Bạn **KHÔNG** được đợi User nhắc. Bạn phải tự đề xuất. 
+Chỉ khi User phản hồi "Đồng ý" hoặc "Ok", bạn mới tiến hành đọc file `AGENTS/WORKFLOW/RULE-UPDATE-KNOWLEDGE.md` để ghi log vĩnh viễn.
+
+## 3. LƯU LỊCH SỬ (FLIGHT RECORDER)
+Mọi lịch sử phiên làm việc của bạn (Architecture Decision Records) phải được lưu ở `docs/agent-logs/` (nằm ngoài thư mục AGENTS). 
+KHÔNG BAO GIỜ lưu log dự án vào bên trong thư mục `AGENTS/` để giữ cho hệ thống AGENTS tinh khiết 100%.
+
+## 4. BẢO VỆ ENCODING (CRLF & UTF-8)
+Khi bắt đầu làm việc với một dự án, BẮT BUỘC phải kiểm tra xem file `.gitattributes` đã tồn tại ở gốc dự án chưa. Nếu chưa có, phải tự động tạo ngay file `.gitattributes` với cấu hình `* text=auto eol=lf` để chống lại lỗi sai lệch ký tự Windows/UTF-8.

@@ -24,13 +24,15 @@
     "test:frontend": "node --test tests/frontend/*.test.mjs",
     "smoke-test": "bash scripts/smoke-test.sh",
     "smoke-test:quick": "bash scripts/smoke-test.sh --skip-build --skip-model",
-    "smoke-test:upgrade": "bash scripts/smoke-test.sh --keep-data --skip-build"
+    "smoke-test:upgrade": "bash scripts/smoke-test.sh --keep-data --skip-build",
+    "prepare": "husky"
   },
   "workspaces": [
     "frontend"
   ],
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
     "kill-port-process": "^4.0.2",
     "playwright": "^1.59.1",
     "turbo": "^2.9.7",

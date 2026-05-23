@@ -297,9 +297,14 @@ def _load_model_sync():
 
         try:
             if device == "cuda":
-                _set_loading("compiling", "Compiling model (torch.compile)…")
-                _model.llm = torch.compile(_model.llm, mode="reduce-overhead")
-                logger.info("torch.compile applied.")
+                from services import settings_store
+                disabled = _env_flag("TORCH_COMPILE_DISABLE") or settings_store.get_text("perf.torch_compile_disabled", "0") == "1"
+                if disabled:
+                    logger.info("torch.compile skipped: disabled in settings or env var.")
+                else:
+                    _set_loading("compiling", "Compiling model (torch.compile)…")
+                    _model.llm = torch.compile(_model.llm, mode="reduce-overhead")
+                    logger.info("torch.compile applied.")
         except Exception as e:
             logger.info("torch.compile skipped: %s", e)
 

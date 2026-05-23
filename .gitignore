@@ -107,3 +107,7 @@ research/
 marketing.md
 .coverage
 /engines/
+
+.gitnexus/
+
+.agents/

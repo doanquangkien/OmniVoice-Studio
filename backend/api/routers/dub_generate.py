@@ -470,8 +470,9 @@ async def preview_segment(job_id: str, req: SegmentPreviewRequest):
     no disk write, no watermark, no mix. Just raw audio preview.
     """
     job = _get_job(job_id)
-    if not job:
+    if not job and job_id != "__stories__":
         raise HTTPException(status_code=404, detail="Job not found")
+    job = job or {}
 
     _model = await get_model()
 
